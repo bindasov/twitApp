@@ -10,6 +10,7 @@
 #include <vector>
 #include <QString>
 #include <QDebug>
+#include <QMessageBox>
 
 class twitterClient
 {

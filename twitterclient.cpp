@@ -26,6 +26,7 @@ std::vector<QString> twitterClient::getFollowers(std::string& usrnm) {
         previous_cursor_fol=fol["previous_cursor_str"].toString();
         next_cursor_fol=fol["next_cursor_str"].toString();
 
+        if (fol["errors"].toArray().size()>0) throw std::runtime_error(fol["errors"].toArray()[0].toObject()["message"].toString().toStdString());
         folUsr.resize(fol["users"].toArray().size());
         for (size_t i=0; i<folUsr.size(); i++)
             folUsr[i]=fol["users"].toArray()[i].toObject()["screen_name"].toString();
@@ -40,6 +41,7 @@ std::vector<QString> twitterClient::getFriends(std::string& usrnm) {
     if (twitterObj.performGet(friendsUrl))
         twitterObj.getLastWebResponse(replyMsg);
     else twitterObj.getLastCurlError(replyMsg);
+    qDebug() << QString::fromStdString(replyMsg);
 
     std::vector<QString> frUsr;
     qReplyFol = QString::fromStdString(replyMsg);
@@ -49,9 +51,10 @@ std::vector<QString> twitterClient::getFriends(std::string& usrnm) {
         previous_cursor_fr=fr["previous_cursor_str"].toString();
         next_cursor_fr=fr["next_cursor_str"].toString();
 
+        if (fr["errors"].toArray().size()>0) throw std::runtime_error(fr["errors"].toArray()[0].toObject()["message"].toString().toStdString());
         frUsr.resize(fr["users"].toArray().size());
         for (size_t i=0; i<frUsr.size(); i++)
-            frUsr[i]=fr["users"].toArray()[i].toObject()["screen_name"].toString();
+        frUsr[i]=fr["users"].toArray()[i].toObject()["screen_name"].toString();
     }
     friendsUrl.erase(friendsUrl.find(usrnm));
     return frUsr;
