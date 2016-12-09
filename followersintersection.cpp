@@ -19,16 +19,8 @@ void followersIntersection::on_pushButton_clicked()
 {
     username=ui->lineEdit->text().toStdString();
     username2=ui->lineEdit_2->text().toStdString();
-    try {
-        getSharedFollowers();
-        getSharedFriends();
-    }
-    catch (std::runtime_error& e) {
-        QMessageBox qmsbox;
-        qmsbox.setText(QString::fromStdString(e.what()));
-        qmsbox.setWindowModality(Qt::WindowModal);
-        qmsbox.exec();
-    }
+    getSharedFollowers();
+    getSharedFriends();
 }
 
 void followersIntersection::getSharedFollowers()
@@ -40,10 +32,10 @@ void followersIntersection::getSharedFollowers()
         folUsrnms2=getFollowers(username2);
     }
     catch (std::runtime_error& e) {
-        QMessageBox qmsbox;
-        qmsbox.setText(QString::fromStdString(e.what()));
-        qmsbox.setWindowModality(Qt::WindowModal);
-        qmsbox.exec();
+            QMessageBox qmsbox;
+            qmsbox.setText(QString::fromStdString(e.what()));
+            qmsbox.setWindowModality(Qt::WindowModal);
+            qmsbox.exec();
     }
 
     for (size_t i=0; i<folUsrnms.size(); i++) {
@@ -52,6 +44,7 @@ void followersIntersection::getSharedFollowers()
             }
         }
         for (size_t i=0; i<sharedFollowers.size(); i++) ui->textBrowser->append(sharedFollowers[i]);
+    for (size_t i=0; i<folUsrnms.size(); i++) qDebug() << folUsrnms[i];
     qDebug() << folUsrnms.size() << folUsrnms2.size();
 }
 
@@ -63,12 +56,7 @@ void followersIntersection::getSharedFriends()
         frUsrnms=getFriends(username);
         frUsrnms2=getFriends(username2);
     }
-    catch (std::runtime_error& e) {
-        QMessageBox qmsbox;
-        qmsbox.setText(QString::fromStdString(e.what()));
-        qmsbox.setWindowModality(Qt::WindowModal);
-        qmsbox.exec();
-    }
+    catch (std::runtime_error& e) {}
 
     for (size_t i=0; i<frUsrnms.size(); i++) {
             for (size_t j=0; j<frUsrnms2.size(); j++) {

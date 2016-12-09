@@ -73,7 +73,7 @@
         <item>
          <widget class="QLabel" name="label_3">
           <property name="text">
-           <string>Shared followers (max 200)</string>
+           <string>Shared followers (for &lt;= 200 followers)</string>
           </property>
          </widget>
         </item>
@@ -87,7 +87,7 @@
         <item>
          <widget class="QLabel" name="label_4">
           <property name="text">
-           <string>Shared friends (max 200)</string>
+           <string>Shared friends (for &lt;= 200 friends)</string>
           </property>
          </widget>
         </item>

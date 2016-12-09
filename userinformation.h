@@ -13,7 +13,7 @@ class userInformation : public QDialog, private twitterClient
 
 public:
     explicit userInformation(QWidget *parent = 0);
-    void getUserInfo();
+    void setUserInfo();
     void setFollowers();
     void setFriends();
     ~userInformation();

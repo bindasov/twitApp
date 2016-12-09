@@ -24,49 +24,53 @@ void userInformation::on_pushButton_clicked()
 {
     username = ui->lineEdit->text().toStdString();
     try {
-        getUserInfo();
+        setUserInfo();
         setFollowers();
         setFriends();
     }
     catch (std::runtime_error& e) {
-        QMessageBox qmsbox;
-        qmsbox.setText(QString::fromStdString(e.what()));
-        qmsbox.setWindowModality(Qt::WindowModal);
-        qmsbox.exec();
+            QMessageBox qmsbox;
+            qmsbox.setText(QString::fromStdString(e.what()));
+            qmsbox.setWindowModality(Qt::WindowModal);
+            qmsbox.exec();
     }
 }
 
-void userInformation::getUserInfo()
+void userInformation::setUserInfo()
 {
     ui->textBrowser->clear();
-    if (twitterObj.userGet(username, 0))
-        twitterObj.getLastWebResponse(replyMsg);
-    else twitterObj.getLastCurlError(replyMsg);
 
-    qReplyInfo = QString::fromStdString(replyMsg);
-    infDoc = QJsonDocument::fromJson(qReplyInfo.toUtf8());
+    infDoc = getUserInfo(username);
     if (!infDoc.isNull() && infDoc.isObject()) {
         info = infDoc.object();
-        if (info["id_str"].toString()=="") throw std::runtime_error(info["errors"].toArray()[0].toObject()["message"].toString().toStdString());
-        else
-            ui->textBrowser->setText("ID: " + (info["id_str"].toString()) + "\nName: " + info["name"].toString() +
-                    "\nUsername: " + info["screen_name"].toString() + "\nLocation: " + info["location"].toString() +
-                    "\nDescription: " + info["description"].toString() + "\nRegistered at: " + info["created_at"].toString() +
-                    "\nTweets: " + QString::number(info["statuses_count"].toInt()) +
-                    "\nFollowers: " + QString::number(info["followers_count"].toInt()) +
-                    "\nFriends: " + QString::number(info["friends_count"].toInt()) +
-                    "\nFavourites: " + QString::number(info["favourites_count"].toInt()) +
-                    "\nTime zone: " + info["time_zone"].toString() + "\nHomepage: " +
-                    info["entities"].toObject()["url"].toObject()["urls"].toArray()[0].toObject()["display_url"].toString() +
-                    "\nLast tweet: \"" + info["status"].toObject()["text"].toString() + "\" created at " +
-                    info["status"].toObject()["created_at"].toString());
+        if (info["id_str"].toString()=="") throw std::runtime_error
+                (info["errors"].toArray()[0].toObject()["message"].toString().toStdString());
+        ui->textBrowser->setText("ID: " + (info["id_str"].toString()) + "\nName: " + info["name"].toString() +
+            "\nUsername: " + info["screen_name"].toString() + "\nLocation: " + info["location"].toString() +
+            "\nDescription: " + info["description"].toString() + "\nRegistered at: " +
+            info["created_at"].toString() + "\nTweets: " + QString::number(info["statuses_count"].toInt()) +
+            "\nFollowers: " + QString::number(info["followers_count"].toInt()) +
+            "\nFriends: " + QString::number(info["friends_count"].toInt()) +
+            "\nFavourites: " + QString::number(info["favourites_count"].toInt()) +
+            "\nTime zone: " + info["time_zone"].toString() + "\nHomepage: " +
+            info["entities"].toObject()["url"].toObject()["urls"].toArray()[0].toObject()["display_url"].toString() +
+            "\nLast tweet: \"" + info["status"].toObject()["text"].toString() + "\" created at " +
+            info["status"].toObject()["created_at"].toString());
     }
 }
 
 void userInformation::setFollowers()
 {
     ui->textBrowser_2->clear();
-    folUsrnms=getFollowers(username);
+    try {
+        folUsrnms=getFollowers(username);
+    }
+    catch (std::runtime_error& e) {
+            QMessageBox qmsbox;
+            qmsbox.setText(QString::fromStdString(e.what()));
+            qmsbox.setWindowModality(Qt::WindowModal);
+            qmsbox.exec();
+    }
 
     for (size_t i=0; i<folUsrnms.size(); i++)
         ui->textBrowser_2->append(folUsrnms[i]);
@@ -85,7 +89,15 @@ void userInformation::setFollowers()
 void userInformation::setFriends() {
     ui->textBrowser_3->clear();
 
-    frUsrnms=getFriends(username);
+    try {
+        frUsrnms=getFriends(username);
+    }
+    catch (std::runtime_error& e) {
+            QMessageBox qmsbox;
+            qmsbox.setText(QString::fromStdString(e.what()));
+            qmsbox.setWindowModality(Qt::WindowModal);
+            qmsbox.exec();
+    }
 
     for (size_t i=0; i<frUsrnms.size(); i++)
         ui->textBrowser_3->append(frUsrnms[i]);
@@ -109,10 +121,10 @@ void userInformation::on_pushButton_2_clicked()
         setFollowers();
     }
     catch (std::runtime_error& e) {
-        QMessageBox qmsbox;
-        qmsbox.setText(QString::fromStdString(e.what()));
-        qmsbox.setWindowModality(Qt::WindowModal);
-        qmsbox.exec();
+            QMessageBox qmsbox;
+            qmsbox.setText(QString::fromStdString(e.what()));
+            qmsbox.setWindowModality(Qt::WindowModal);
+            qmsbox.exec();
     }
 }
 
@@ -123,10 +135,10 @@ void userInformation::on_pushButton_3_clicked()
         setFollowers();
     }
     catch (std::runtime_error& e) {
-        QMessageBox qmsbox;
-        qmsbox.setText(QString::fromStdString(e.what()));
-        qmsbox.setWindowModality(Qt::WindowModal);
-        qmsbox.exec();
+            QMessageBox qmsbox;
+            qmsbox.setText(QString::fromStdString(e.what()));
+            qmsbox.setWindowModality(Qt::WindowModal);
+            qmsbox.exec();
     }
 }
 
@@ -137,10 +149,10 @@ void userInformation::on_pushButton_4_clicked()
         setFriends();
     }
     catch (std::runtime_error& e) {
-        QMessageBox qmsbox;
-        qmsbox.setText(QString::fromStdString(e.what()));
-        qmsbox.setWindowModality(Qt::WindowModal);
-        qmsbox.exec();
+            QMessageBox qmsbox;
+            qmsbox.setText(QString::fromStdString(e.what()));
+            qmsbox.setWindowModality(Qt::WindowModal);
+            qmsbox.exec();
     }
 }
 
@@ -151,9 +163,9 @@ void userInformation::on_pushButton_5_clicked()
         setFriends();
     }
     catch (std::runtime_error& e) {
-        QMessageBox qmsbox;
-        qmsbox.setText(QString::fromStdString(e.what()));
-        qmsbox.setWindowModality(Qt::WindowModal);
-        qmsbox.exec();
+            QMessageBox qmsbox;
+            qmsbox.setText(QString::fromStdString(e.what()));
+            qmsbox.setWindowModality(Qt::WindowModal);
+            qmsbox.exec();
     }
 }
