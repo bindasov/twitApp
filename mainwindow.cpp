@@ -8,14 +8,27 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     this->setFixedHeight(150);
     this->setFixedWidth(300);
-    usrInfo = new userInformation;
-    folIntrs = new followersIntersection;
+    if (checkConnection()) {
+        usrInfo = new userInformation;
+        folIntrs = new followersIntersection;
+        _created=1;
+    }
+    else {
+        ui->pushButton->setDisabled(true);
+        ui->pushButton_2->setDisabled(true);
+        QMessageBox::critical(0, "Error", "Cannot authorize you!");
+        _created=0;
+    }
 }
 
 MainWindow::~MainWindow()
 {
-    usrInfo->close();
-    folIntrs->close();
+    if (_created) {
+        usrInfo->close();
+        delete usrInfo;
+        folIntrs->close();
+        delete folIntrs;
+    }
     delete ui;
 }
 

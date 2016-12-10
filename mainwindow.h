@@ -4,12 +4,13 @@
 #include <QMainWindow>
 #include "userinformation.h"
 #include "followersintersection.h"
+#include "twitterclient.h"
 
 namespace Ui {
 class MainWindow;
 }
 
-class MainWindow : public QMainWindow
+class MainWindow : public QMainWindow, private twitterClient
 {
     Q_OBJECT
 
@@ -26,6 +27,7 @@ private:
     Ui::MainWindow *ui;
     userInformation* usrInfo;
     followersIntersection* folIntrs;
+    bool _created;
 };
 
 #endif // MAINWINDOW_H

@@ -1,22 +1,21 @@
 #include "twitterclient.h"
 
+#define xstr(s) str(s)
+#define str(s) #s
+
 twitterClient::twitterClient()
 {
-    ConsumerKey       = "";
-    ConsumerSecret    = "";
-    AccessTokenKey    = "";
-    AccessTokenSecret = "";
-    twitterObj.getOAuth().setConsumerKey(ConsumerKey);
-    twitterObj.getOAuth().setConsumerSecret(ConsumerSecret);
-    twitterObj.getOAuth().setOAuthTokenKey(AccessTokenKey);
-    twitterObj.getOAuth().setOAuthTokenSecret(AccessTokenSecret);
+    twitterObj.getOAuth().setConsumerKey(xstr(CONSUMERKEY));
+    twitterObj.getOAuth().setConsumerSecret(xstr(CONSUMERSECRET));
+    twitterObj.getOAuth().setOAuthTokenKey(xstr(ACCESSTOKENKEY));
+    twitterObj.getOAuth().setOAuthTokenSecret(xstr(ACCESSTOKENSECRET));
     followersUrl = "https://api.twitter.com/1.1/followers/list.json?skip_status=true&include_user_entities=false&count=200&screen_name=";
     friendsUrl = "https://api.twitter.com/1.1/friends/list.json?skip_status=true&include_user_entities=false&count=200&screen_name=";
     _cursor = "";
 }
 
 std::vector<QString> twitterClient::getFollowers(std::string& usrnm) {
-    if (usrnm=="") throw std::runtime_error("");
+    if (usrnm=="") throw std::runtime_error("Enter username!");
     if (usrnm!=tempusr) _cursor="-1";
     tempusr=usrnm;
     followersUrl+= usrnm + "&cursor=" + _cursor;
@@ -44,7 +43,7 @@ std::vector<QString> twitterClient::getFollowers(std::string& usrnm) {
 }
 
 std::vector<QString> twitterClient::getFriends(std::string& usrnm) {
-    if (usrnm=="") throw std::runtime_error("");
+    if (usrnm=="") throw std::runtime_error("Enter username!");
     if (usrnm!=tempusr) _cursor="-1";
     tempusr=usrnm;
     friendsUrl+= usrnm + "&cursor=" + _cursor;
@@ -81,4 +80,12 @@ QJsonDocument twitterClient::getUserInfo(std::string& usrnm) {
     qReplyInfo = QString::fromStdString(replyMsg);
     QJsonDocument infDocum = QJsonDocument::fromJson(qReplyInfo.toUtf8());
     return infDocum;
+}
+
+bool twitterClient::checkConnection() {
+    return (twitterObj.accountVerifyCredGet());
+}
+
+void twitterClient::error_handler(std::string name, std::string what) {
+    QMessageBox::warning(0, QString::fromStdString(name), QString::fromStdString(what));
 }

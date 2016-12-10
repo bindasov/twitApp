@@ -29,10 +29,7 @@ void userInformation::on_pushButton_clicked()
         setFriends();
     }
     catch (std::runtime_error& e) {
-            QMessageBox qmsbox;
-            qmsbox.setText(QString::fromStdString(e.what()));
-            qmsbox.setWindowModality(Qt::WindowModal);
-            qmsbox.exec();
+            error_handler("userInformation", e.what());
     }
 }
 
@@ -63,15 +60,7 @@ void userInformation::setUserInfo()
 
 void userInformation::setFollowers()
 {
-    try {
-        folUsrnms=getFollowers(username);
-    }
-    catch (std::runtime_error& e) {
-            QMessageBox qmsbox;
-            qmsbox.setText(QString::fromStdString(e.what()));
-            qmsbox.setWindowModality(Qt::WindowModal);
-            qmsbox.exec();
-    }
+    folUsrnms=getFollowers(username);
 
     for (size_t i=0; i<folUsrnms.size(); i++)
         ui->textBrowser_2->append(folUsrnms[i]);
@@ -88,15 +77,7 @@ void userInformation::setFollowers()
 }
 
 void userInformation::setFriends() {
-    try {
-        frUsrnms=getFriends(username);
-    }
-    catch (std::runtime_error& e) {
-            QMessageBox qmsbox;
-            qmsbox.setText(QString::fromStdString(e.what()));
-            qmsbox.setWindowModality(Qt::WindowModal);
-            qmsbox.exec();
-    }
+    frUsrnms=getFriends(username);
 
     for (size_t i=0; i<frUsrnms.size(); i++)
         ui->textBrowser_3->append(frUsrnms[i]);
@@ -120,10 +101,7 @@ void userInformation::on_pushButton_2_clicked()
         setFollowers();
     }
     catch (std::runtime_error& e) {
-            QMessageBox qmsbox;
-            qmsbox.setText(QString::fromStdString(e.what()));
-            qmsbox.setWindowModality(Qt::WindowModal);
-            qmsbox.exec();
+        error_handler("userInformation", e.what());
     }
 }
 
@@ -134,10 +112,7 @@ void userInformation::on_pushButton_3_clicked()
         setFollowers();
     }
     catch (std::runtime_error& e) {
-            QMessageBox qmsbox;
-            qmsbox.setText(QString::fromStdString(e.what()));
-            qmsbox.setWindowModality(Qt::WindowModal);
-            qmsbox.exec();
+        error_handler("userInformation", e.what());
     }
 }
 
@@ -148,10 +123,7 @@ void userInformation::on_pushButton_4_clicked()
         setFriends();
     }
     catch (std::runtime_error& e) {
-            QMessageBox qmsbox;
-            qmsbox.setText(QString::fromStdString(e.what()));
-            qmsbox.setWindowModality(Qt::WindowModal);
-            qmsbox.exec();
+        error_handler("userInformation", e.what());
     }
 }
 
@@ -162,9 +134,6 @@ void userInformation::on_pushButton_5_clicked()
         setFriends();
     }
     catch (std::runtime_error& e) {
-            QMessageBox qmsbox;
-            qmsbox.setText(QString::fromStdString(e.what()));
-            qmsbox.setWindowModality(Qt::WindowModal);
-            qmsbox.exec();
+        error_handler("userInformation", e.what());
     }
 }

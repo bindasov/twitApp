@@ -27,6 +27,16 @@ FORMS    += mainwindow.ui \
     userinformation.ui \
     followersintersection.ui
 
+CONSUMERKEY = "$$cat(/Users/iandrew/twitApp/ConsumerKey.txt)"
+CONSUMERSECRET = "$$cat(/Users/iandrew/twitApp/ConsumerSecret.txt)"
+ACCESSTOKENKEY = "$$cat(/Users/iandrew/twitApp/AccessTokenKey.txt)"
+ACCESSTOKENSECRET = "$$cat(/Users/iandrew/twitApp/AccessTokenSecret.txt)"
+
+DEFINES += "CONSUMERKEY=\"$$CONSUMERKEY\""
+DEFINES += "CONSUMERSECRET=\"$$CONSUMERSECRET\""
+DEFINES += "ACCESSTOKENKEY=\"$$ACCESSTOKENKEY\""
+DEFINES += "ACCESSTOKENSECRET=\"$$ACCESSTOKENSECRET\""
+
 win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../../../usr/local/lib/release/ -ltwitcurl
 else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../../../usr/local/lib/debug/ -ltwitcurl
 else:unix: LIBS += -L$$PWD/../../../usr/local/lib/ -ltwitcurl
