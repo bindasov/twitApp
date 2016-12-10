@@ -17,6 +17,8 @@ followersIntersection::~followersIntersection()
 
 void followersIntersection::on_pushButton_clicked()
 {
+    ui->textBrowser->clear();
+    ui->textBrowser_2->clear();
     username=ui->lineEdit->text().toStdString();
     username2=ui->lineEdit_2->text().toStdString();
     getSharedFollowers();
@@ -25,8 +27,6 @@ void followersIntersection::on_pushButton_clicked()
 
 void followersIntersection::getSharedFollowers()
 {
-    ui->textBrowser->clear();
-
     try {
         folUsrnms=getFollowers(username);
         folUsrnms2=getFollowers(username2);
@@ -39,19 +39,15 @@ void followersIntersection::getSharedFollowers()
     }
 
     for (size_t i=0; i<folUsrnms.size(); i++) {
-        for (size_t j=0; j<folUsrnms2.size(); j++) {
+        for (size_t j=0; j<folUsrnms2.size(); j++)
             if (folUsrnms[i]==folUsrnms2[j]) sharedFollowers.push_back(folUsrnms[i]);
-            }
-        }
-        for (size_t i=0; i<sharedFollowers.size(); i++) ui->textBrowser->append(sharedFollowers[i]);
-    for (size_t i=0; i<folUsrnms.size(); i++) qDebug() << folUsrnms[i];
-    qDebug() << folUsrnms.size() << folUsrnms2.size();
+    }
+    for (size_t i=0; i<sharedFollowers.size(); i++) ui->textBrowser->append(sharedFollowers[i]);
+    sharedFollowers.clear();
 }
 
 void followersIntersection::getSharedFriends()
 {
-    ui->textBrowser_2->clear();
-
     try {
         frUsrnms=getFriends(username);
         frUsrnms2=getFriends(username2);
@@ -59,9 +55,9 @@ void followersIntersection::getSharedFriends()
     catch (std::runtime_error& e) {}
 
     for (size_t i=0; i<frUsrnms.size(); i++) {
-            for (size_t j=0; j<frUsrnms2.size(); j++) {
+            for (size_t j=0; j<frUsrnms2.size(); j++)
                 if (frUsrnms[i]==frUsrnms2[j]) sharedFriends.push_back(frUsrnms[i]);
-            }
-        }
-        for (size_t i=0; i<sharedFriends.size(); i++) ui->textBrowser_2->append(sharedFriends[i]);
+    }
+    for (size_t i=0; i<sharedFriends.size(); i++) ui->textBrowser_2->append(sharedFriends[i]);
+    sharedFriends.clear();
 }

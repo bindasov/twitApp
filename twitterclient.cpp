@@ -24,7 +24,6 @@ std::vector<QString> twitterClient::getFollowers(std::string& usrnm) {
     if (twitterObj.performGet(followersUrl))
         twitterObj.getLastWebResponse(replyMsg);
     else twitterObj.getLastCurlError(replyMsg);
-    qDebug() << QString::fromStdString(followersUrl);
 
     std::vector<QString> folUsr;
     qReplyFol = QString::fromStdString(replyMsg);
