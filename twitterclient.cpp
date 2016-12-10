@@ -17,6 +17,7 @@ twitterClient::twitterClient()
 
 std::vector<QString> twitterClient::getFollowers(std::string& usrnm) {
     if (usrnm=="") throw std::runtime_error("");
+    // можно пофиксить с исключениями (чтобы корректный what() был)
     if (usrnm!=tempusr) _cursor="-1";
     tempusr=usrnm;
     followersUrl+= usrnm + "&cursor=" + _cursor;
@@ -45,6 +46,7 @@ std::vector<QString> twitterClient::getFollowers(std::string& usrnm) {
 
 std::vector<QString> twitterClient::getFriends(std::string& usrnm) {
     if (usrnm=="") throw std::runtime_error("");
+    // same
     if (usrnm!=tempusr) _cursor="-1";
     tempusr=usrnm;
     friendsUrl+= usrnm + "&cursor=" + _cursor;
@@ -66,7 +68,7 @@ std::vector<QString> twitterClient::getFriends(std::string& usrnm) {
 
         frUsr.resize(fr["users"].toArray().size());
         for (size_t i=0; i<frUsr.size(); i++)
-        frUsr[i]=fr["users"].toArray()[i].toObject()["screen_name"].toString();
+            frUsr[i]=fr["users"].toArray()[i].toObject()["screen_name"].toString();
     }
     friendsUrl.erase(friendsUrl.find(usrnm));
     return frUsr;
