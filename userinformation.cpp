@@ -58,6 +58,7 @@ void userInformation::setUserInfo()
             info["entities"].toObject()["url"].toObject()["urls"].toArray()[0].toObject()["display_url"].toString() +
             "\nLast tweet: \"" + info["status"].toObject()["text"].toString() + "\" created at " +
             info["status"].toObject()["created_at"].toString());
+        // что-то страшное, но вроде работает
     }
 }
 
@@ -168,3 +169,4 @@ void userInformation::on_pushButton_5_clicked()
             qmsbox.exec();
     }
 }
+// так как в catch всегда одинаково, почему бы не создать отдельную функцию для этого, исключая дублирование кода
