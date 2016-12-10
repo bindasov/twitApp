@@ -14,7 +14,7 @@
 ***
 
 Для сборки проекта использовались:
-<li>
+
 * Qt Creator 4.1.0, основанный на Qt 5.7.0 <https://www.qt.io/download-open-source/>
 * библиотека cURL <https://curl.haxx.se/download.html>
 * немного измененная библиотека twitCurl <https://github.com/bindasov/twitcurl/tree/master/libtwitcurl> (одно изменение пришлось сделать из-за того, что в Twitter API изменились адресы для запросов, а библиотеку не обновили)
