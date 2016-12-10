@@ -16,6 +16,8 @@ MainWindow::~MainWindow()
 {
     usrInfo->close();
     folIntrs->close();
+    delete usrInfo;  //что происходит с памятью? 
+    delete folIntrs; //Делаешь new в конструкторе , а в деструкторе не чистишь 
     delete ui;
 }
 
