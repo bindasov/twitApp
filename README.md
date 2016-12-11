@@ -41,3 +41,10 @@ g++ -c -I. twitcurl.cpp oauthlib.cpp urlencode.cpp base64.cpp HMAC_SHA1.cpp SHA1
 ar rvs libtwitcurl.a *.o
 ```
 
+Для полноценной работы программы необходимо указать пути к 4 файлам с токенами в twitApp.pro
+```
+CONSUMERKEY = "$$cat(/path/to/twitApp/ConsumerKey.txt)"
+CONSUMERSECRET = "$$cat(/path/to/twitApp/ConsumerSecret.txt)"
+ACCESSTOKENKEY = "$$cat(/path/to/twitApp/AccessTokenKey.txt)"
+ACCESSTOKENSECRET = "$$cat(/path/to/twitApp/AccessTokenSecret.txt)"
+```
