@@ -36,8 +36,6 @@ void userInformation::on_pushButton_clicked()
 void userInformation::setUserInfo()
 {
     ui->textBrowser->clear();
-    ui->textBrowser_2->clear();
-    ui->textBrowser_3->clear();
 
     infDoc = getUserInfo(username);
     if (!infDoc.isNull() && infDoc.isObject()) {
@@ -60,6 +58,7 @@ void userInformation::setUserInfo()
 
 void userInformation::setFollowers()
 {
+    ui->textBrowser_2->clear();
     folUsrnms=getFollowers(username);
 
     for (size_t i=0; i<folUsrnms.size(); i++)
@@ -77,6 +76,7 @@ void userInformation::setFollowers()
 }
 
 void userInformation::setFriends() {
+    ui->textBrowser_3->clear();
     frUsrnms=getFriends(username);
 
     for (size_t i=0; i<frUsrnms.size(); i++)
